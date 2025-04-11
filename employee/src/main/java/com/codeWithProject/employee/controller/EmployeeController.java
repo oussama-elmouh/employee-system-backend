@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
 
 
@@ -43,5 +43,11 @@ public class EmployeeController {
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<> (e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
+        Employee employee = employeeService.getEmployeeById(id);
+        if(employee == null )return ResponseEntity.notFound().build();
+    return ResponseEntity.ok(employee);
     }
 }
